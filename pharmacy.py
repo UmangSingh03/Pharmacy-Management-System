@@ -39,7 +39,7 @@ class PharmacyManagementSystem:
         lbltitle.pack(side=TOP,fill=X)
 
 
-        img1=Image.open(r"D:\shivam\computer study\python\pharmacy\logo.jpg")
+        img1=Image.open("logo.jpg")
         img1 = img1.resize((80, 80), Image.LANCZOS)
         self.photoimg1=ImageTk.PhotoImage(img1)
         b1=Button(self.root,image=self.photoimg1,borderwidth=0)
@@ -204,19 +204,19 @@ class PharmacyManagementSystem:
         lblhome=Label(DataFrameLeft,font=("arial",12,"bold"),text="Stay Home Stay Safe:",padx=2,pady=6,bg="white",fg="red",width=37)
         lblhome.place(x=410,y=140)
 
-        img2=Image.open(r"D:\shivam\computer study\python\pharmacy\tab.jpg")
+        img2=Image.open("tab.jpg")
         img2 = img2.resize((150, 135), Image.LANCZOS)
         self.photoimg2=ImageTk.PhotoImage(img2)
         b1=Button(self.root,image=self.photoimg2,borderwidth=0)
         b1.place(x=770,y=330)
 
-        img3=Image.open(r"D:\shivam\computer study\python\pharmacy\eng.jpg")
+        img3=Image.open("eng.jpg")
         img3 = img3.resize((150, 135), Image.LANCZOS)
         self.photoimg3=ImageTk.PhotoImage(img3)
         b1=Button(self.root,image=self.photoimg3,borderwidth=0)
         b1.place(x=620,y=330)
 
-        img4=Image.open(r"D:\shivam\computer study\python\pharmacy\madam.jpg")
+        img4=Image.open("madam.jpg")
         img4 = img4.resize((150, 135), Image.LANCZOS)
         self.photoimg4=ImageTk.PhotoImage(img4)
         b1=Button(self.root,image=self.photoimg4,borderwidth=0)
@@ -225,19 +225,19 @@ class PharmacyManagementSystem:
         DataFrameRight=LabelFrame(DataFrame,bd=10,relief=RIDGE,padx=20,text="Medicine Add Department",fg="darkgreen",font=("arial",12,"bold"))
         DataFrameRight.place(x=910,y=5,width=540,height=350)
 
-        img5 =Image.open(r"D:\shivam\computer study\python\pharmacy\tablet.jpg")
+        img5 =Image.open("tablet.jpg")
         img5 = img5.resize((200, 75), Image.LANCZOS)
         self.photoimg5=ImageTk.PhotoImage(img5)
         b1=Button(self.root,image=self.photoimg5,borderwidth=0)
         b1.place(x=960,y=160)
 
-        img6=Image.open(r"D:\shivam\computer study\python\pharmacy\tablet.jpg")
+        img6=Image.open("tablet.jpg")
         img6 = img6.resize((200, 75), Image.LANCZOS)
         self.photoimg6=ImageTk.PhotoImage(img6)
         b1=Button(self.root,image=self.photoimg6,borderwidth=0)
         b1.place(x=1160,y=160)
 
-        img7=Image.open(r"D:\shivam\computer study\python\pharmacy\tab.jpg")
+        img7=Image.open("tab.jpg")
         img7 = img7.resize((200, 145), Image.LANCZOS)
         self.photoimg7=ImageTk.PhotoImage(img7)
         b1=Button(self.root,image=self.photoimg7,borderwidth=0)
@@ -359,27 +359,6 @@ class PharmacyManagementSystem:
 
 
     #---------------Add Medicine Functionality Declaration-----------------------
-    '''def AddMed(self):
-        if self.refMed_var.get() == "" or self.addmed_var.get() == "":
-            messagebox.showerror("Error", "All fields are required")
-            return
-        
-        conn=mysql.connector.connect(host="localhost",user="root",password=".",database="mydata")
-        my_cursor=conn.cursor()
-        my_cursor.execute("insert into pharma(Ref,MedName) values(%s,%s)",(
-                                                                                    self.refMed_var.get(),
-                                                                                    self.addmed_var.get(),
-
-
-
-                                                                                ))
-        conn.commit()
-        self.fetch_dataMed()
-        self.MedGet_cursor()
-            
-        conn.close()
-        messagebox.showinfo("Success","Medicine Added")'''
-    
     def AddMed(self):
         ref_no = self.refMed_var.get()
         med_name = self.addmed_var.get()
@@ -397,7 +376,7 @@ class PharmacyManagementSystem:
             )
             my_cursor = conn.cursor()
 
-            # ✅ Check if Ref already exists
+            # Check if Ref already exists
             my_cursor.execute("SELECT Ref FROM pharma WHERE Ref = %s", (ref_no,))
             result = my_cursor.fetchone()
 
@@ -408,7 +387,7 @@ class PharmacyManagementSystem:
                 )
                 return  # Stop here – do NOT insert
 
-            # ✅ Insert if not duplicate
+            # Insert if not duplicate
             my_cursor.execute(
                 "INSERT INTO pharma (Ref, MedName) VALUES (%s, %s)",
                 (ref_no, med_name)
@@ -460,12 +439,7 @@ class PharmacyManagementSystem:
 
 
     #--------------MedGetCursor-------------------
-    #def MedGet_cursor(self,event=""):
-        #cursor_row=self.medicine_table.focus()
-        #content=self.medicine_table.item(cursor_row)
-        #row=content["values"]
-        #self.refMed_var.set(row[0])
-        #self.addmed_var.set(row[1])
+    
 
     def MedGet_cursor(self, ev=""):
         try:
@@ -540,7 +514,7 @@ class PharmacyManagementSystem:
                 conn.close()
                 return  # ❌ Stop insertion
             
-            # ✅ Insert only if match exists
+            # Insert only if match exists
             insert_query = """INSERT INTO pharmacy (refno, cmpName, Type, medName, lot, issuedate, expdate, uses, 
                             sideeffect, warning, dosage, price, product) 
                             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
@@ -571,9 +545,6 @@ class PharmacyManagementSystem:
             messagebox.showerror("Database Error", f"MySQL Error: {err}")
         except Exception as e:
             messagebox.showerror("Error", f"An unexpected error occurred:\n{e}")
-
-            # conn.close()
-            # messagebox.showinfo("Success","data has been inserted")
 
 
 
@@ -660,10 +631,9 @@ class PharmacyManagementSystem:
 
 
     def reset(self):
-        #self.ref_var.set(row[0]),
+        
         self.cmpName_var.set(""),
-        #self.typeMed_var.set(row[2]),
-        #self.medName_var.set(row[3]),
+       
         self.lot_var.set(""),
         self.issuedate_var.set(""),
         self.expdate_var.set(""),
